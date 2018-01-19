@@ -53,7 +53,8 @@ func parseResponse(res Response) events.APIGatewayProxyResponse {
 	}
 
 	if body, err := json.Marshal(res.ResponseData); err != nil {
-		res.APIGatewayProxyResponse.Body = res.ResponseData.(string)
+		// if the marshalling fails, just stringify whatever's in `res.ResponseData`
+		res.APIGatewayProxyResponse.Body = string(res.ResponseData.(string))
 	} else {
 		res.APIGatewayProxyResponse.Body = string(body)
 	}
