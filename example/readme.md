@@ -9,7 +9,7 @@ This example provides a very simple example of proper implementation of Messiah.
 If you'd like to get it running on your own AWS account you'll need:
 
 - Go, properly configured. Obviously.
-- the AWS CLI, properly authenticated with access to Lambda, S3, API Gateway, and STS
+- the [AWS CLI](https://aws.amazon.com/cli/), properly [authenticated](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) with access to Lambda, S3, API Gateway, and STS
 - Ironically [`npm`](https://www.npmjs.com/), hopefully a somewhat recent version
 - to `npm install` in this directory. This gets a couple of tools used to easy deployment.
 
