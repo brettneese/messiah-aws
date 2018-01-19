@@ -1,13 +1,13 @@
 # Messiah
 
-`Messiah` makes it easy to write JSON-powered APIs on top of AWS Lambda and API Gateway in Go, using the recently announced official Go support. It's a thin - very thin - layer of abstraction over the `aws-lambda-go` SDK that makes it easy to cleanly adapt existing or new Go APIs to deploy onto Lambda and API Gateway. 
+`Messiah` makes it easy to write JSON-powered APIs on top of AWS Lambda and API Gateway in Go, using the [recently announced official Go support](https://aws.amazon.com/blogs/compute/announcing-go-support-for-aws-lambda/). It's a thin - very thin - layer of abstraction over the `aws-lambda-go` SDK that makes it easy to cleanly adapt existing or new Go APIs to deploy onto Lambda and API Gateway. 
 
 No more hacks, no more weird proxies, just straight up Go and everything that's great about that.
 
 
 ## Why use Messiah? 
 
-Messiah, frankly, doesn't do too much. But it makes working with Lambda and Go much simpler. Namely, it helps you implement existing Go patterns like encapsulation and composition into your microservice API endpoints. 
+Messiah makes working with Lambda, API Gateway, and Go much simpler. Namely, it helps you implement good Go patterns like encapsulation and composition into your microservice API endpoint handlers by providing a couple simple abstractions over the `aws-sdk-go` package.
 
 Rather than building a request handler that speaks `ctx context.Context, request events.APIGatewayProxyRequest` and passing that function into 	`lambda.Start()`, you'll pass a generic `Handle` function that speaks `req Messiah.Request` and `res Messiah.Response` into `Messiah.GetLambdaHandler(handler)` and pass _that_ into `lambda.Start.` Like so, from the [example]('/example'):
 
@@ -51,7 +51,7 @@ That being said, Messiah uses embedded types, so you still have access to all th
 
 #### Adapt an existing Go API to run on Lambda 
 
-If you already have a clean Go API tied into `ServeHTTP(res http.ResponseWriter, req *http.Request)`, adapting your handlers to speak to Messiah instead should be very simple. It's a matter of simply modifiying your handlers slightly -
+If you already have a clean Go API tied into `ServeHTTP(res http.ResponseWriter, req *http.Request)`, adapting your handlers to speak to Messiah instead should be very simple. It's a matter of simply modifying your handlers slightly -
 instead of `ServeHTTP(res http.ResponseWriter, req *http.Request)`, you'll change that to something like `Handle(req Messiah.Request)` and instead of `json.NewEncoder(res).Encode(apiResponse)`, you'll simply do something like
 
 ```
@@ -63,7 +63,7 @@ res := Messiah.Response{
 return res
 ```
 
-#### You like JSON, but don't like encoding it
+#### You like JSON, but don't like (un)encoding it
 
 One of the small layers of abstraction on top of the native `aws-lambda-go` package is native support for marshalling and unmarshalling JSON. If it can, Messiah automatically unmarshalls the request body into a `Request.RequestData` map and marshalls `Response.ResponseData` into a JSON response body.
 
@@ -76,13 +76,15 @@ But never fear - if it can't marshall `Response.ResponseData` into JSON, it'll t
 
 There's were a lot of use of the symbol "handler" while building this, and calling it [Handel](https://en.wikipedia.org/wiki/George_Frideric_Handel)would've been too confusing.
 
+#### What's the license? 
+MIT 
 #### This is awesome and I want more? 
 
 I live in west LA and happy to chat about your AWS/Serverless needs. Take a peak at my [resume](brett@neese.rocks) or contact me at <brett@neese.rocks>.
 
 ### Acknowledgements
 
-Special thanks to [@mnaughto](https://github.com/mnaughto) for helping me throught the initial prototype of this (and the name), and for our company, [HBK Engineering](https://hbkengineering.com), for sponsoring the development time. We do lots of cool mapping things - if you'd like to hear more about our team, feel free to [reach out](mailto:hi@hbkapps.com).
+Special thanks to [@mnaughto](https://github.com/mnaughto) for helping me through the initial prototype of this (and the name), and for our company, [HBK Engineering](https://hbkengineering.com), for sponsoring the development time. We do lots of cool mapping things - if you'd like to hear more about our team, feel free to [reach out](mailto:hi@hbkapps.com).
 
 ### ToDo
 
