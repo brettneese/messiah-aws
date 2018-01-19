@@ -1,6 +1,7 @@
 package Messiah
 
 import (
+	"context"
 	"net/http"
 	"testing"
 
@@ -62,11 +63,13 @@ var MockAPIGatewayProxyRequest = events.APIGatewayProxyRequest{
 	},
 }
 
+var MockLambdaContext context.Context
+
 func TestParsingRequest(t *testing.T) {
 
 	Convey("given an ApiGatewayProxyRequest with JSON data in the req.RequestData", t, func() {
 		MockAPIGatewayProxyRequest.Body = "{\"Hello\":\"World\"}"
-		request := parseRequest(MockAPIGatewayProxyRequest)
+		request := parseRequest(MockLambdaContext, MockAPIGatewayProxyRequest)
 
 		Convey("it should  return a properly unmarshalled RequestData map[string]", func() {
 			So(request.RequestData, ShouldContainKey, "Hello")
@@ -81,7 +84,7 @@ func TestParsingRequest(t *testing.T) {
 
 	Convey("given an ApiGatewayProxyRequest with a string in the req.Body", t, func() {
 		MockAPIGatewayProxyRequest.Body = "Hello World"
-		request := parseRequest(MockAPIGatewayProxyRequest)
+		request := parseRequest(MockLambdaContext, MockAPIGatewayProxyRequest)
 
 		Convey("it should return the data as a string in the RequestData property", func() {
 			So(request.Body, ShouldEqual, "Hello World")
