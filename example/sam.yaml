@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: ''
+Parameters:
+  StackName:
+    Type: String
+    Default: messiah-example-stack
+  BucketName:
+    Type: String
+    Default: sam-deploy-bucket-{{AWS_ACCOUNT_ID}}
+Resources:
+  MessiahExampleFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: messiah-example-status
+      CodeUri: ./deployment.zip
+      Handler: main
+      Runtime: go1.x
+      MemorySize: 128
+      Timeout: 3
+      Events:
+        ApiRequestRoot:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
+        ApiRequestProxy:
+          Type: Api
+          Properties:
+            Path: '/{proxy+}'
+            Method: ANY

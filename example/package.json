@@ -1,0 +1,13 @@
+{
+    "name": "messiah-example",
+    "scripts": {
+        "build": "GOOS=linux go build -o main",
+        "package": "zip deployment.zip main",
+        "deploy": "npm run build; npm run package; npm run deploy:sammie",
+        "deploy:sammie": "export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --output text --query 'Account'); envsubh sam.yaml sam.yaml.out; sammie deploy -t sam.yaml.out; rm sam.yaml.out"
+    },
+    "dependencies": {
+        "envsub": "^3.1.0",
+        "sammie": "^0.2.1"
+    }
+}
