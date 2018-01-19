@@ -31,7 +31,7 @@ func parseRequest(r events.APIGatewayProxyRequest) Request {
 	var apiRequest map[string]interface{}
 
 	arr := []byte(r.Body)
-	json.Unmarshal(arr, &apiRequest)
+	json.Unmarshal(arr, apiRequest)
 
 	request := Request{
 		APIGatewayProxyRequest: r,
