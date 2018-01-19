@@ -74,14 +74,14 @@ But never fear - if it can't marshall `Response.ResponseData` into JSON, it'll t
 
 #### Why is it called Messiah? 
 
-There's were a lot of use of the symbol "handler" while building this, and calling it [Handel](https://en.wikipedia.org/wiki/George_Frideric_Handel)would've been too confusing.
+There's were a lot of use of the symbol "handler" while building this, and calling it [Handel](https://en.wikipedia.org/wiki/George_Frideric_Handel) would've been too confusing.
 
 #### What's the license? 
 MIT 
 
 ### How do I run an API that's built on top of Messiah locally?
 
-You wait until [@mhart](https://github.com/mhart) gets done adding Go support to [`docker-lambda`](https://github.com/lambci/docker-lambda/issues/65) so that [`aws-sam-local`](https://github.com/awslabs/aws-sam-local) works with Go. Last I head it's coming ["Real Soon Now™ 😊."](https://twitter.com/hichaelmart/status/953085798680756225)
+You wait until [@mhart](https://github.com/mhart) gets done adding Go support to [`docker-lambda`](https://github.com/lambci/docker-lambda/issues/65) so that [`aws-sam-local`](https://github.com/awslabs/aws-sam-local) works with Go. Last I heard it's coming ["Real Soon Now™ 😊."](https://twitter.com/hichaelmart/status/953085798680756225)
 
 In the meantime, your tests should be good enough to verify functionality.
 #### This is awesome and I want more? 
