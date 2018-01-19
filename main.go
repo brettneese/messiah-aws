@@ -13,12 +13,12 @@ type Handler interface {
 }
 
 type Request struct {
-	events.APIGatewayProxyRequest
+	*events.APIGatewayProxyRequest
 	RequestData map[string]interface{}
 }
 
 type Response struct {
-	events.APIGatewayProxyResponse
+	*events.APIGatewayProxyResponse
 	Headers      map[string]string
 	StatusCode   int
 	ResponseData interface{}
@@ -34,7 +34,7 @@ func parseRequest(r events.APIGatewayProxyRequest) Request {
 	json.Unmarshal(arr, &apiRequest)
 
 	request := Request{
-		APIGatewayProxyRequest: r,
+		APIGatewayProxyRequest: &r,
 		RequestData:            apiRequest,
 	}
 
