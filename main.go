@@ -14,7 +14,7 @@ type Handler interface {
 
 // Request is messiah's generic HTTP-like Request type. RequestData is the unmarshalled JSON data from the request. By embedding the events.APIGatewayProxyRequest, you also have access to all of the other properties from events.APIGatewayProxyRequest.
 type Request struct {
-	Context context.Context
+	Context *context.Context
 	events.APIGatewayProxyRequestContext
 	events.APIGatewayProxyRequest
 	RequestData map[string]interface{}
@@ -33,7 +33,7 @@ type Response struct {
 type LambdaHandler func(_ context.Context, r events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error)
 
 // parseRequest accepts a events.APIGatewayProxyRequest type, attempts to unmarshall the APIGatewayProxyRequest from JSON, and returns a generic Messiah.Request type, merging in all the values from events.APIGatewayProxyRequest
-func parseRequest(ctx context.Context, r events.APIGatewayProxyRequest) Request {
+func parseRequest(ctx *context.Context, r events.APIGatewayProxyRequest) Request {
 	var apiRequest map[string]interface{}
 
 	arr := []byte(r.Body)
@@ -73,7 +73,7 @@ func parseResponse(res Response) events.APIGatewayProxyResponse {
 // GetLambdaHandler accepts a generic endpoint handler and returns a generic lambdaHandler function, which should be fed into lambda.Start().
 func GetLambdaHandler(handler Handler) LambdaHandler {
 	return func(ctx context.Context, r events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-		res := handler.Handle(parseRequest(ctx, r)).(Response)
+		res := handler.Handle(parseRequest(&ctx, r)).(Response)
 
 		return parseResponse(res), nil
 	}
