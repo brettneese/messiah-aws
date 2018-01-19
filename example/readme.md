@@ -10,7 +10,7 @@ If you'd like to get it running on your own AWS account you'll need:
 
 - Go, properly configured. Obviously.
 - the AWS CLI, properly authenticated with access to Lambda, S3, API Gateway, and STS
-- Ironically NPM, hopefully a somewhat recent version
+- Ironically [`npm`](https://www.npmjs.com/), hopefully a somewhat recent version
 - to `npm install` in this directory. This gets a couple of tools used to easy deployment.
 
 ### Deploying

@@ -43,7 +43,7 @@ func main() {
 
 Use Messiah if you want to: 
 
-#### Separate Implementation from Business Logic
+#### Separate implementation from business logic
 
 Rather than being tied into Lambda, Messiah's simple layer of abstraction gives you generic methods to access generic `request` and `response` data. Switching to a new serverless deployment engine would simply entail adapting Messiah to speak the API of your provider - while it wouldn't be instant, it would be much less work to do so than if you were tied directly into the `events.APIGatewayProxyResponse` and `events.APIGatewayProxyRequest` structs.
 
@@ -74,7 +74,7 @@ But never fear - if it can't marshall `Response.ResponseData` into JSON, it'll t
 
 #### Why is it called Messiah? 
 
-There's were a lot of use of the symbol "handler" while building this, and calling it [`Handel`](https://en.wikipedia.org/wiki/George_Frideric_Handel)would've been too confusing.
+There's were a lot of use of the symbol "handler" while building this, and calling it [Handel](https://en.wikipedia.org/wiki/George_Frideric_Handel)would've been too confusing.
 
 #### This is awesome and I want more? 
 
@@ -82,7 +82,7 @@ I live in west LA and happy to chat about your AWS/Serverless needs. Take a peak
 
 ### Acknowledgements
 
-Special thanks to @mnaughto for helping me throught the initial prototype of this (and the name), and for our company, HBK Engineering, for sponsoring the development time. We do lots of cool mapping things - if you'd like to hear more about our team, feel free to reach out.
+Special thanks to [@mnaughto](https://github.com/mnaughto) for helping me throught the initial prototype of this (and the name), and for our company, [HBK Engineering](https://hbkengineering.com), for sponsoring the development time. We do lots of cool mapping things - if you'd like to hear more about our team, feel free to [reach out](mailto:hi@hbkapps.com).
 
 ### ToDo
 
