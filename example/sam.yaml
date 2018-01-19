@@ -7,7 +7,7 @@ Parameters:
     Default: messiah-example-stack
   BucketName:
     Type: String
-    Default: sam-deploy-bucket-{{AWS_ACCOUNT_ID}}
+    Default: messiah-deploy-bucket-{{AWS_ACCOUNT_ID}}
 Resources:
   MessiahExampleFunction:
     Type: 'AWS::Serverless::Function'
