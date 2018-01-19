@@ -91,9 +91,3 @@ I live in west LA and happy to chat about your AWS/Serverless needs. Take a peak
 ### Acknowledgements
 
 Special thanks to [@mnaughto](https://github.com/mnaughto) for helping me through the initial prototype of this (and the name), and for our company, [HBK Engineering](https://hbkengineering.com), for sponsoring the development time. We do lots of cool mapping things - if you'd like to hear more about our team, feel free to [reach out](mailto:hi@hbkapps.com).
-
-### ToDo
-
-- [ ] tests 
-- [ ] improve documentation, generate godocs 
-- [ ] write walkthrough blog post
