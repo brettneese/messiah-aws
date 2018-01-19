@@ -163,3 +163,21 @@ func TestParsingResponse(t *testing.T) {
 	})
 
 }
+
+type MockHandler struct{}
+
+func (handler MockHandler) Handle(req Request) interface{} {
+	res := Response{
+		StatusCode:   200,
+		ResponseData: map[string]interface{}{"hello": "world"},
+	}
+	return res
+}
+
+func TestGetLambdaHandler(t *testing.T) {
+	handler := MockHandler{}
+
+	Convey("given a MockHandler, should return a non-nil lambdaHandler function", t, func() {
+		So(GetLambdaHandler(handler), ShouldNotBeNil)
+	})
+}
