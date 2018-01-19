@@ -15,7 +15,6 @@ type Handler interface {
 // Request is messiah's generic HTTP-like Request type. RequestData is the unmarshalled JSON data from the request. By embedding the events.APIGatewayProxyRequest, you also have access to all of the other properties from events.APIGatewayProxyRequest.
 type Request struct {
 	Context context.Context
-	events.APIGatewayProxyRequestContext
 	events.APIGatewayProxyRequest
 	RequestData map[string]interface{}
 }
