@@ -3,8 +3,7 @@ package main
 import (
 	"hbkauth-api/packages/config"
 
-	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/brettneese/messiah"
+	"github.com/brettneese/messiah-aws"
 )
 
 // StatusHandler is the handler for health checks.
@@ -35,5 +34,5 @@ func main() {
 		Status: status,
 	}
 
-	lambda.Start(Messiah.GetLambdaHandler(handler))
+	Messiah.Start(handler)
 }

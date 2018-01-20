@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
 // Handler is messiah's generic function type. Handlers accept a generic messiah.Request type and return a messiah.Response. Those values then get set on the `events.APIGatewayProxyResponse.`
@@ -76,4 +77,10 @@ func GetLambdaHandler(handler Handler) LambdaHandler {
 
 		return parseResponse(res), nil
 	}
+}
+
+// Start accepts a generic Messiah endpoint handler (as defined by Messiah.Handler), translates it into a vendor-specific handler, and passes that handler into lambda.Start()
+func Start(handler Handler) {
+	h := GetLambdaHandler(handler)
+	lambda.Start(h)
 }
