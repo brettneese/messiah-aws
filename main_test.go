@@ -63,7 +63,7 @@ var MockAPIGatewayProxyRequest = events.APIGatewayProxyRequest{
 	},
 }
 
-var MockLambdaContext context.Context
+var MockLambdaContext *context.Context
 
 func TestParsingRequest(t *testing.T) {
 
