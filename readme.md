@@ -1,15 +1,17 @@
-# Messiah
+# Messiah-AWS
 
-`Messiah` makes it easy to write JSON-powered APIs on top of AWS Lambda and API Gateway in Go, using the [recently announced official Go support](https://aws.amazon.com/blogs/compute/announcing-go-support-for-aws-lambda/). It's a thin - very thin - layer of abstraction over the `aws-lambda-go` SDK that makes it easy to cleanly adapt existing or new Go APIs to deploy onto Lambda and API Gateway. 
+`Messiah-AWS` makes it easy to write JSON-powered APIs on top of AWS Lambda and API Gateway in a generic fashion Go, using the [recently announced official Go support](https://aws.amazon.com/blogs/compute/announcing-go-support-for-aws-lambda/). It's a thin - very thin - layer of abstraction over the `aws-lambda-go` SDK that makes it easy to cleanly adapt existing or new Go APIs to deploy onto Lambda and API Gateway. 
 
 No more hacks, no more weird proxies, just straight up Go and everything that's great about that.
 
 
 ## Why use Messiah? 
 
-Messiah makes working with Lambda, API Gateway, and Go much simpler. Namely, it helps you implement good Go patterns like encapsulation and composition into your microservice API endpoint handlers by providing a couple simple abstractions over the `aws-sdk-go` package.
+Messiah-AWS makes working with Lambda, API Gateway, and Go much simpler. Namely, it helps you implement good Go patterns like encapsulation and composition into your microservice API endpoint handlers by providing a couple simple abstractions over the `aws-sdk-go` package.
 
-Rather than building a request handler that speaks `ctx context.Context, request events.APIGatewayProxyRequest` and passing that function into 	`lambda.Start()`, you'll pass a generic `Handle` function that speaks `req Messiah.Request` and `res Messiah.Response` into `Messiah.GetLambdaHandler(handler)` and pass _that_ into `lambda.Start.` Like so, from the [example]('/example'):
+Rather than building a request handler that speaks `ctx context.Context, request events.APIGatewayProxyRequest` and passing that function into 	`lambda.Start()`, you'll pass a generic `Handle` function that speaks `req Messiah.Request` and `res Messiah.Response` into `Messiah.GetLambdaHandler(handler)` and pass that into `Messiah.Start.` 
+
+Like so, from the [example]('/example'):
 
 ```
 
@@ -36,20 +38,24 @@ func main() {
 		Status: status,
 	}
 
-	lambda.Start(Messiah.GetLambdaHandler(handler))
+	Messiah.Start(handler)
 }
 
 ```
 
-Use Messiah if you want to: 
+This will automagically pass/parse the generic Messiah-AWS handler into lambda.Start(). This makes it much easier to adapt Messiah to any other backend - including, theoretically, a simple HTTP serer - _without changing your code._ You'd just replace "Messiah" with another package that implements Messiah's generic `Request`, `Response` types on your generic Messiah handlers.
 
-#### Separate implementation from business logic
+Use Messiah if: 
 
-Rather than being tied into Lambda, Messiah's simple layer of abstraction gives you generic methods to access generic `request` and `response` data. Switching to a new serverless deployment engine would simply entail adapting Messiah to speak the API of your provider - while it wouldn't be instant, it would be much less work to do so than if you were tied directly into the `events.APIGatewayProxyResponse` and `events.APIGatewayProxyRequest` structs.
+#### You want to separate implementation from business logic and avoid vendor lock in
 
-That being said, Messiah uses embedded types, so you still have access to all that stuff through Messiah's `Request` and `Response` types.
+Rather than being tied into Lambda, Messiah's simple layer of abstraction gives you generic methods to access generic `request` and `response` data, and a provider-agnostic `messiah.Start()` method (which simply calls `lambda.Start`. Switching to a new serverless deployment engine would simply entail adapting Messiah to speak the API of your provider - while it wouldn't be instant, it would be much less work to do so than if you were tied directly into the `events.APIGatewayProxyResponse` and `events.APIGatewayProxyRequest` structs and `lambda.Start` methods.
 
-#### Adapt an existing Go API to run on Lambda 
+Since Messiah-AWS simply abstracts over the `aws-lambda-go` package, migrating from Lambda to a different provider -- or even a traditional HTTP server -- would simply be a matter of building a different package that implements Messiah's generic `Response`, `Request` types and `Messiah.Start` methods, and updating your import paths to point to this forked version of `Messiah.`
+
+That being said, Messiah uses embedded types in it's `Request` and `Response` structs, so you still have access to all that stuff through Messiah's `Request` and `Response` types. However, talking to those embedded types directly may make it harder to migrate from Lambda to your provider of choice.
+
+#### You want to adapt an existing Go API to run on Lambda 
 
 If you already have a clean Go API tied into `ServeHTTP(res http.ResponseWriter, req *http.Request)`, adapting your handlers to speak to Messiah instead should be very simple. It's a matter of simply modifying your handlers slightly -
 instead of `ServeHTTP(res http.ResponseWriter, req *http.Request)`, you'll change that to something like `Handle(req Messiah.Request)` and instead of `json.NewEncoder(res).Encode(apiResponse)`, you'll simply do something like
