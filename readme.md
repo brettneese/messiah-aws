@@ -2,8 +2,9 @@
 
 `Messiah-AWS` is a simple wrapper that makes it easy to write JSON-powered APIs on top of AWS Lambda and API Gateway in a generic fashion in Go, using the [recently announced official Go support](https://aws.amazon.com/blogs/compute/announcing-go-support-for-aws-lambda/). It's a thin - very thin - layer of abstraction over the `aws-lambda-go` SDK that makes it easy to cleanly adapt existing or new Go APIs to deploy onto Lambda and API Gateway, in an adaptable way that avoids vendor lock-in.
 
-No more hacks, no more weird proxies, no AWS-specific magic, just straight up Go and everything that's great about that.
+No more hacks, no more weird proxies, no AWS-specific magic, just straight up Go and everything that's great about that. 
 
+There's a detailed tutorial on how to implement Messiah [here](https://medium.com/@brettneese/messiah-aws-5f428f0d043).
 
 ## Why use Messiah? 
 
